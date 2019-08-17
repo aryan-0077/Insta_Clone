@@ -6,28 +6,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.SaveCallback;
-import com.shashank.sony.fancytoastlib.FancyToast;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button btnSignUp;
     private Button btnLogin;
 
-    private EditText edtUserNameSignUp , getEdtUserNameLogin ,
-        edtPasswordSignUp,edtPasswordLogin;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnSignUp = findViewById(R.id.btnSignUp);
+        btnSignUp = findViewById(R.id.btnSignUp2);
         btnLogin = findViewById(R.id.btnLogin);
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
