@@ -1,5 +1,6 @@
 package android.example.insta_clone;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -42,6 +43,11 @@ public class Login extends AppCompatActivity {
                                              user.get("username") + " Logged in successfully",
                                             FancyToast.LENGTH_LONG,FancyToast.SUCCESS,
                                             true).show();
+
+                                    Intent intent = new Intent(Login.this,
+                                            WelcomeActivity.class);
+                                    startActivity(intent);
+
                                 }else{
                                     FancyToast.makeText(Login.this,
                                             e.getMessage(),FancyToast.LENGTH_LONG,
