@@ -1,7 +1,9 @@
 package android.example.insta_clone;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,34 +31,61 @@ public class SignUp extends AppCompatActivity {
         edtPasswordSignUp = findViewById(R.id.edtPasswordSignUp);
         btnSignUp2 = findViewById(R.id.btnSignUp2);
 
+        edtPasswordSignUp.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent KeyEvent) {
+                if(i == KeyEvent.KEYCODE_ENTER && KeyEvent.getAction()
+                == KeyEvent.ACTION_DOWN){
+
+                    //onclick(btnSignUp2);
+                }
+                return false;
+            }
+
+
+        });
+
         btnSignUp2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                final ParseUser appUser = new ParseUser();
-                appUser.setUsername(edtUserNameSignUp.getText().toString());
-                appUser.setPassword(edtPasswordSignUp.getText().toString());
+                if(edtUserNameSignUp.getText().toString().equals("") || edtPasswordSignUp.getText().toString().equals("")){
+                    FancyToast.makeText(SignUp.this,
+                            "Empty Fields not Allowed ",FancyToast.LENGTH_LONG,
+                            FancyToast.INFO,true).show();
+                }else{
+                    final ParseUser appUser = new ParseUser();
+                    appUser.setUsername(edtUserNameSignUp.getText().toString());
+                    appUser.setPassword(edtPasswordSignUp.getText().toString());
 
-                appUser.signUpInBackground(new SignUpCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if(e == null){
-                            FancyToast.makeText(SignUp.this,
-                                    appUser.get("username") + " is signed up successfully",
-                                    FancyToast.LENGTH_LONG,FancyToast.SUCCESS,
-                                    true).show();
+                    final ProgressDialog progressDialog = new ProgressDialog(SignUp.this);
+                    progressDialog.setMessage("Signing Up  " + edtUserNameSignUp.getText().toString());
+                    progressDialog.show();
 
-                            Intent intent = new Intent(SignUp.this,
-                                    WelcomeActivity.class);
-                            startActivity(intent);
+                    appUser.signUpInBackground(new SignUpCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if(e == null){
+                                FancyToast.makeText(SignUp.this,
+                                        appUser.get("username") + " is signed up successfully",
+                                        FancyToast.LENGTH_LONG,FancyToast.SUCCESS,
+                                        true).show();
 
-                        }else{
-                            FancyToast.makeText(SignUp.this,
-                                    e.getMessage(),FancyToast.LENGTH_LONG,
-                                    FancyToast.ERROR,true).show();
+                                Intent intent = new Intent(SignUp.this,
+                                        WelcomeActivity.class);
+                                startActivity(intent);
+
+                            }else{
+                                FancyToast.makeText(SignUp.this,
+                                        e.getMessage(),FancyToast.LENGTH_LONG,
+                                        FancyToast.ERROR,true).show();
+                            }
+
+                            progressDialog.dismiss();
                         }
-                    }
-                });
+                    });
+                }
+
             }
         });
     }

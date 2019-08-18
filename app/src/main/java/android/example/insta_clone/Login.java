@@ -1,5 +1,6 @@
 package android.example.insta_clone;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -29,6 +30,8 @@ public class Login extends AppCompatActivity {
         edtPasswordLogin = findViewById(R.id.edtPasswordLogin);
         btnLogin2 = findViewById(R.id.btnLogin);
 
+        final ProgressDialog progressDialog = new ProgressDialog(Login.this);
+
         btnLogin2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,6 +47,10 @@ public class Login extends AppCompatActivity {
                                             FancyToast.LENGTH_LONG,FancyToast.SUCCESS,
                                             true).show();
 
+
+                                    progressDialog.setMessage("Loging Up  " + edtUserNameLogin.getText().toString());
+                                    progressDialog.show();
+
                                     Intent intent = new Intent(Login.this,
                                             WelcomeActivity.class);
                                     startActivity(intent);
@@ -53,6 +60,7 @@ public class Login extends AppCompatActivity {
                                             e.getMessage(),FancyToast.LENGTH_LONG,
                                             FancyToast.ERROR,true).show();
                                 }
+                                progressDialog.dismiss();
                             }
                         });
 
