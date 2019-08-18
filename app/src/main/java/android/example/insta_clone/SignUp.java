@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -41,9 +42,11 @@ public class SignUp extends AppCompatActivity {
                 }
                 return false;
             }
+         });
 
-
-        });
+        if (ParseUser.getCurrentUser() != null){
+            transitionToSocialMediaActivity();
+        }
 
         btnSignUp2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +77,7 @@ public class SignUp extends AppCompatActivity {
                                 Intent intent = new Intent(SignUp.this,
                                         WelcomeActivity.class);
                                 startActivity(intent);
+                                transitionToSocialMediaActivity();
 
                             }else{
                                 FancyToast.makeText(SignUp.this,
@@ -88,5 +92,24 @@ public class SignUp extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void rootSignUpTapped(View view){
+
+        try{
+            InputMethodManager inputMethodManager =
+                    (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
+                    .getWindowToken(), 0);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    private void transitionToSocialMediaActivity(){
+        Intent intent = new Intent(SignUp.this,
+                SocialMediaActivity.class);
+        startActivity(intent);
     }
 }

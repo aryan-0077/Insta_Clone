@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
+import com.parse.ParseUser;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btnSignUp;
@@ -22,6 +24,19 @@ public class MainActivity extends AppCompatActivity {
 
         btnSignUp = findViewById(R.id.btnSignUp2);
         btnLogin = findViewById(R.id.btnLogin);
+
+
+        try {
+            findViewById(R.id.btnLogout).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ParseUser.logOut();
+                    finish();
+                }
+            });
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,9 +74,21 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     public void rootTapped(View view){
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
-        .getWindowToken(), 0);
+
+        try{
+            InputMethodManager inputMethodManager =
+                    (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
+                    .getWindowToken(), 0);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
+    private void transitionToSocialMediaActivity(){
+        Intent intent = new Intent(MainActivity.this,
+                SocialMediaActivity.class);
+        startActivity(intent);
+    }
+
 }

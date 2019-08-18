@@ -32,6 +32,10 @@ public class Login extends AppCompatActivity {
 
         final ProgressDialog progressDialog = new ProgressDialog(Login.this);
 
+        if (ParseUser.getCurrentUser() != null){
+            transitionToSocialMediaActivity();
+        }
+
         btnLogin2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,6 +58,7 @@ public class Login extends AppCompatActivity {
                                     Intent intent = new Intent(Login.this,
                                             WelcomeActivity.class);
                                     startActivity(intent);
+                                    transitionToSocialMediaActivity();
 
                                 }else{
                                     FancyToast.makeText(Login.this,
@@ -67,5 +72,11 @@ public class Login extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void transitionToSocialMediaActivity(){
+        Intent intent = new Intent(Login.this,
+                SocialMediaActivity.class);
+        startActivity(intent);
     }
 }
