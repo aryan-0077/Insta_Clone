@@ -7,4 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".SocialMediaActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+        //android:theme="@style/AppTheme.AppBarOverlay">
+
+        <include android:id="@+id/myToolbar"
+            layout="@layout/my_toolbar" />
+
+
+    </android.support.design.widget.AppBarLayout>
+
 </RelativeLayout>
